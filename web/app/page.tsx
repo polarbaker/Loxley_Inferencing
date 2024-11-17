@@ -1,23 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { useMutation } from 'convex/react';
-import { api } from '@/convex/_generated/api';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import Image from 'next/image';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -35,13 +18,15 @@ export default function Home() {
             Generate 1000 logos for $1
           </p>
           <div className="flex gap-4 mt-8 animate-[fade-in-down_0.4s_ease-out_forwards] opacity-0 delay-300">
-            <Button>Get Started</Button>
+            <Link href="/dashboard">
+              <Button>Get Started</Button>
+            </Link>
             <Button
-              variant="outline"
               className="text-sm md:text-lg px-6 py-2"
               onClick={() =>
                 document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })
               }
+              variant="outline"
             >
               Learn More
             </Button>

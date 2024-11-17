@@ -1,11 +1,18 @@
 'use client';
 
 import * as React from 'react';
-import { BookOpen, Bot, GalleryVerticalEnd, Settings2, SquareTerminal } from 'lucide-react';
+import {
+  BookOpen,
+  GalleryVerticalEnd,
+  Settings2,
+  House,
+  SquarePen,
+  Layers3,
+  ServerCog,
+} from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
-import { TeamSwitcher } from '@/components/team-switcher';
 import {
   Sidebar,
   SidebarContent,
@@ -18,85 +25,34 @@ import {
 const data = {
   user: {
     name: "Jack O'Brien",
-    email: 'jack@subconscious-systems.com',
+    email: 'my@email.com',
     avatar: '/avatars/icon.jpg',
   },
-  teams: [
-    {
-      name: 'MailKiwi',
-      logo: GalleryVerticalEnd,
-      plan: 'Pro',
-    },
-  ],
   navMain: [
     {
-      title: 'Models',
+      title: 'Home',
       url: '#',
-      icon: Bot,
-      items: [
-        {
-          title: 'Language Models',
-          url: '#',
-        },
-        {
-          title: 'Image Generation',
-          url: '#',
-        },
-        {
-          title: 'Image Processing',
-          url: '#',
-        },
-        {
-          title: 'Audio Transcription',
-          url: '#',
-        },
-      ],
+      icon: House,
     },
     {
-      title: 'Documentation',
+      title: 'Generate',
       url: '#',
-      icon: BookOpen,
-      items: [
-        {
-          title: 'Introduction',
-          url: '#',
-        },
-        {
-          title: 'Get Started',
-          url: '#',
-        },
-        {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
-          url: '#',
-        },
-      ],
+      icon: SquarePen,
     },
     {
-      title: 'Settings',
+      title: 'Refine',
       url: '#',
-      icon: Settings2,
-      items: [
-        {
-          title: 'General',
-          url: '#',
-        },
-        {
-          title: 'Team',
-          url: '#',
-        },
-        {
-          title: 'Billing',
-          url: '#',
-        },
-        {
-          title: 'Limits',
-          url: '#',
-        },
-      ],
+      icon: Layers3,
+    },
+    {
+      title: 'Processing Jobs',
+      url: '#',
+      icon: ServerCog,
+    },
+    {
+      title: 'Review',
+      url: '#',
+      icon: GalleryVerticalEnd,
     },
   ],
 };
@@ -105,7 +61,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <div className="flex items-center gap-2">
+          <div className="text-lg font-bold">Loxley Logos</div>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
