@@ -1,15 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import {
-  BookOpen,
-  GalleryVerticalEnd,
-  Settings2,
-  House,
-  SquarePen,
-  Layers3,
-  ServerCog,
-} from 'lucide-react';
+import { House, SquarePen, Layers3 } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -31,29 +23,29 @@ const data = {
   navMain: [
     {
       title: 'Home',
-      url: '#',
+      url: '/dashboard',
       icon: House,
     },
     {
       title: 'Generate',
-      url: '#',
+      url: '/dashboard/generate',
       icon: SquarePen,
     },
     {
-      title: 'Refine',
-      url: '#',
+      title: 'Logo Sets',
+      url: '/dashboard/logos',
       icon: Layers3,
     },
-    {
-      title: 'Processing Jobs',
-      url: '#',
-      icon: ServerCog,
-    },
-    {
-      title: 'Review',
-      url: '#',
-      icon: GalleryVerticalEnd,
-    },
+    // {
+    //   title: 'Processing Jobs',
+    //   url: '#',
+    //   icon: ServerCog,
+    // },
+    // {
+    //   title: 'Review',
+    //   url: '#',
+    //   icon: GalleryVerticalEnd,
+    // },
   ],
 };
 
