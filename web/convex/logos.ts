@@ -1,6 +1,7 @@
 import { v } from 'convex/values';
 import { internalMutation, internalQuery, mutation, query } from './_generated/server';
 import { Logo, LogoSet, LogoSetStatus, LogoStatus } from './schema';
+import { generateRandomPromptPermutations } from '../lib/prompts/generatePrompts';
 
 export const createLogoSet = mutation({
   args: {
@@ -12,17 +13,20 @@ export const createLogoSet = mutation({
       status: LogoSetStatus.CREATED,
     });
 
+    // Call your generator stuff
+    const prompts = generateRandomPromptPermutations(args.prompt, 33);
+
+    console.log(prompts);
     // Create array of 100 promises to create logos in parallel
     await Promise.all(
-      Array(100)
-        .fill(null)
-        .map((val, num) => {
-          return ctx.db.insert('logos', {
-            logoSetId: logoSet,
-            prompt: `${args.prompt} - ${num}`,
-            status: LogoStatus.CREATED,
-          });
-        }),
+      prompts.map((val) => {
+        console.log(`Saving ${val}`);
+        return ctx.db.insert('logos', {
+          logoSetId: logoSet,
+          prompt: val,
+          status: LogoStatus.CREATED,
+        });
+      }),
     );
 
     return logoSet;

@@ -33,9 +33,14 @@ export default function Dashboard() {
   const onSubmit = async (data: any) => {
     console.log(data);
     setIsLoading(true);
-    const id = await createLogoSet({ prompt: data.prompt });
-    router.push(`/dashboard/logos/${id}`);
-    setIsLoading(false);
+    try {
+      const id = await createLogoSet({ prompt: data.prompt });
+
+      router.push(`/dashboard/logos/${id}`);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
