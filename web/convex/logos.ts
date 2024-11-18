@@ -2,6 +2,7 @@ import { v } from 'convex/values';
 import { internalMutation, internalQuery, mutation, query } from './_generated/server';
 import { Logo, LogoSet, LogoSetStatus, LogoStatus } from './schema';
 import { generateRandomPromptPermutations } from '../lib/prompts/generatePrompts';
+import { internal } from './_generated/api';
 
 export const createLogoSet = mutation({
   args: {
@@ -10,7 +11,7 @@ export const createLogoSet = mutation({
   handler: async (ctx, args) => {
     const logoSet = await ctx.db.insert('logoSets', {
       originalPrompt: args.prompt,
-      status: LogoSetStatus.CREATED,
+      status: LogoSetStatus.EXPANDING,
     });
 
     // Call your generator stuff
@@ -92,6 +93,39 @@ export const getAllLogos = query({
         return await getLogoSet(ctx, { logoSetId: logoSet._id });
       }),
     );
+  },
+});
+
+export const generateLogos = mutation({
+  args: {
+    logoSetId: v.id('logoSets'),
+  },
+  handler: async (ctx, args) => {
+    const logoSet = await ctx.db.get(args.logoSetId);
+    if (!logoSet) {
+      throw new Error('Logo set not found');
+    }
+
+    // Get all logos for this set
+    const logos = await ctx.db
+      .query('logos')
+      .withIndex('by_logo_set_id', (q) => q.eq('logoSetId', args.logoSetId))
+      .collect();
+
+    // Get prompts from all logos
+    const prompts = logos.map((logo) => logo.prompt);
+
+    // Trigger the internal action
+    await ctx.scheduler.runAfter(0, internal.createLogosAction.createLogos, {
+      prompts: prompts,
+    });
+
+    // Update logo set status to generating
+    await ctx.db.patch(args.logoSetId, {
+      status: LogoSetStatus.GENERATING,
+    });
+
+    return logoSet;
   },
 });
 

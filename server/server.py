@@ -26,13 +26,19 @@ def ping():
 def ping_and_post():
     """ Route to receive GET request and forward the data via POST """
     try:
-        # Get the incoming query parameters (information in GET request)
-        incoming_data = request.args.to_dict()  # Convert query parameters to a dictionary
+        # Get both query parameters and JSON body
+        incoming_data = request.args.to_dict()
+        json_data = request.get_json() or {}
         
-        # Optionally, process or modify the data (add a new key-value pair)
-        incoming_data['new_key'] = 'new_value'  # Add or modify data if needed
+        # Get prompts from JSON body, default to a single default prompt if none provided
+        prompts = json_data.get('prompts', [
+            "A logo for a modern tech company called 'Loxley Logos', futuristic, gradient colors, wireframe, circuit patterns, modern font, innovation theme, vector logo, clean design, high resolution, centered, no background"
+        ])
 
-        images = makeImages()
+        print(prompts)
+        
+        # Generate images using the provided prompts
+        images = makeImages(prompts)
         
         # Send the data and images to the target URL as a POST request
         headers = {'Content-Type': 'application/json'}  # Specify content type as JSON

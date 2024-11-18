@@ -13,6 +13,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as createLogosAction from "../createLogosAction.js";
 import type * as http from "../http.js";
 import type * as httpActions from "../httpActions.js";
 import type * as logos from "../logos.js";
@@ -26,6 +27,7 @@ import type * as logos from "../logos.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  createLogosAction: typeof createLogosAction;
   http: typeof http;
   httpActions: typeof httpActions;
   logos: typeof logos;

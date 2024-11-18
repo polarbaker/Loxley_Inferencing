@@ -18,6 +18,7 @@ export default function Dashboard() {
   });
 
   const updateLogoPrompt = useMutation(api.logos.updateLogoPrompt);
+  const generateLogos = useMutation(api.logos.generateLogos);
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
@@ -38,7 +39,9 @@ export default function Dashboard() {
 
         <div className="flex flex-col gap-2">
           <div>
-            <Button>Submit for Image Generation!</Button>
+            <Button onClick={() => generateLogos({ logoSetId: logoSet!._id })}>
+              Submit for Image Generation!
+            </Button>
           </div>
           <div className="text-sm italic">Review the prompts below before submitting!</div>
         </div>

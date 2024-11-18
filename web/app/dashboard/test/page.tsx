@@ -24,7 +24,7 @@ export default function Dashboard() {
             {imageSet.urls.map((url, j) => (
               <img
                 key={j}
-                src={url}
+                src={url ?? ''}
                 alt={`Generated image ${j + 1}`}
                 className="h-32 w-32 flex-shrink-0 rounded-lg object-cover"
               />
