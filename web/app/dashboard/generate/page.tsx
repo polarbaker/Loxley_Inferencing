@@ -47,6 +47,15 @@ export default function Dashboard() {
     <div className="flex flex-1 flex-col gap-4 p-4">
       <div className="flex flex-col gap-4">
         <h1 className="text-2xl font-bold">Generate</h1>
+        <div className="flex flex-col gap-2 text-sm text-gray-600">
+          <p>Tips for a great logo prompt:</p>
+          <ul className="list-disc list-inside ml-2">
+            <li>Tell us about your company and what it does</li>
+            <li>Put the company name in parentheses (e.g. "Example Co")</li>
+            <li>Describe the style you want (modern, vintage, playful, etc)</li>
+            <li>Tell us what colors and images you want</li>
+          </ul>
+        </div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <div className="flex-1 max-w-xl">
