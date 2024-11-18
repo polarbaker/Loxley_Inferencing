@@ -33,7 +33,6 @@ def ping_and_post():
 
         images = makeImages()
         
-        
         # Send the data and images to the target URL as a POST request
         headers = {'Content-Type': 'application/json'}  # Specify content type as JSON
         data = {
@@ -84,6 +83,7 @@ def makeImages(promptsList = ["A logo for a modern tech company called 'Loxley L
         torch_dtype=torch.bfloat16
     )
 
+    ## embedding engine for the prompts
     t5_nf4 = T5EncoderModel.from_pretrained("diffusers/t5-nf4", torch_dtype=torch.bfloat16)
 
     pipeline = StableDiffusion3Pipeline.from_pretrained(
