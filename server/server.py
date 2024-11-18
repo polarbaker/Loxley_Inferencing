@@ -110,7 +110,7 @@ def makeImages(promptsList = ["A logo for a modern tech company called 'Loxley L
 
     image = pipeline(
         prompt=promptsList,
-        num_inference_steps=2,
+        num_inference_steps=3,
         guidance_scale=0.8,
         max_sequence_length=512,
         num_images_per_prompt = 1
