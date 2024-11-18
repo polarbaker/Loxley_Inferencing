@@ -15,8 +15,22 @@ export default function Dashboard() {
         <h1 className="text-2xl font-bold">All Images Test</h1>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <code>{JSON.stringify(imageSets)}</code>
+      <div className="flex w-full">
+        {imageSets?.map((imageSet, i) => (
+          <div
+            key={i}
+            className="grid grid-cols-3 flex-row gap-2 rounded-lg border p-4 overflow-x-auto"
+          >
+            {imageSet.urls.map((url, j) => (
+              <img
+                key={j}
+                src={url}
+                alt={`Generated image ${j + 1}`}
+                className="h-32 w-32 flex-shrink-0 rounded-lg object-cover"
+              />
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );

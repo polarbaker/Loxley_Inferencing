@@ -17,16 +17,33 @@ export const receiveImage = httpAction(async (ctx, request) => {
   // Store each image in Convex storage
   const imageIds = await Promise.all(
     images.map(async (imageBase64: string) => {
-      console.log(imageBase64);
-      // Convert base64 string to Uint8Array
-      const binaryArray = Uint8Array.from(imageBase64, (c) => c.charCodeAt(0));
+      // Log only the length and first/last few characters of base64 string
+      console.log(`Base64 length: ${imageBase64.length}`);
+      console.log(`Base64 preview: ${imageBase64.slice(0, 50)}...${imageBase64.slice(-50)}`);
 
-      // Create blob from binary array
-      const blob = new Blob([binaryArray], { type: 'image/png' });
+      try {
+        // Ensure the base64 string is properly formatted (remove data URL prefix if present)
+        const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, '');
 
-      // Store the image blob
-      const storageId = await ctx.storage.store(blob);
-      return storageId;
+        // Convert base64 directly to Uint8Array
+        const binaryStr = atob(base64Data);
+        const bytes = new Uint8Array(binaryStr.length);
+        for (let i = 0; i < binaryStr.length; i++) {
+          bytes[i] = binaryStr.charCodeAt(i);
+        }
+
+        // Create blob from Uint8Array
+        const blob = new Blob([bytes], { type: 'image/png' });
+        console.log(`Blob size: ${blob.size} bytes`);
+
+        // Store the image blob
+        const storageId = await ctx.storage.store(blob);
+        console.log(`Successfully stored image with ID: ${storageId}`);
+        return storageId;
+      } catch (error) {
+        console.error('Error processing image:', error);
+        throw error;
+      }
     }),
   );
 
