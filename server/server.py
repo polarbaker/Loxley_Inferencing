@@ -76,10 +76,7 @@ def ping_and_post():
         return jsonify({"status": "error", "message": str(e)}), 400
 
 
-def makeImages(promptsList = ["A logo for a modern tech company called 'Loxley Logos', futuristic, gradient colors, wireframe, circuit patterns, modern font, innovation theme, vector logo, clean design, high resolution, centered, no background",
-    "A logo for a modern tech company called 'Loxley Logos', minimal line, monochrome colors, bold lines, hexagons, sans-serif font, simplicity theme, vector logo, clean design, high resolution, centered, no background",
-    "A logo for a modern tech company called 'Loxley Logos', watercolor, pastel colors, texture overlay, leaves, script font, eco-friendly theme, vector logo, clean design, high resolution, centered, no background"]):
-
+def makeImages(promptsList = ["A logo for a modern tech company called 'Loxley Logos', futuristic, gradient colors, wireframe, circuit patterns, modern font, innovation theme, vector logo, clean design, high resolution, centered, no background"]):
     model_id = "stabilityai/stable-diffusion-3.5-large-turbo"
 
     nf4_config = BitsAndBytesConfig(
