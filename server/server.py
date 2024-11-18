@@ -1,3 +1,4 @@
+import io
 from flask import Flask, request, jsonify
 from diffusers import BitsAndBytesConfig, SD3Transformer2DModel
 from diffusers import StableDiffusion3Pipeline
@@ -35,14 +36,24 @@ def ping_and_post():
         
         # Send the data and images to the target URL as a POST request
         headers = {'Content-Type': 'application/json'}  # Specify content type as JSON
+        
+        # Convert PIL images to base64 strings
+        base64_images = []
+        for img in images:
+            # Convert PIL image to bytes in PNG format
+            img_byte_arr = io.BytesIO()
+            img.save(img_byte_arr, format='PNG')
+            img_byte_arr = img_byte_arr.getvalue()
+            
+            # Encode bytes to base64 string
+            base64_str = base64.b64encode(img_byte_arr).decode('utf-8')
+            base64_images.append(base64_str)
+            
         data = {
             **incoming_data,
-            'images': [
-                # Convert each PIL image to base64 string
-                base64.b64encode(img.tobytes()).decode('utf-8') 
-                for img in images
-            ]
+            'images': base64_images
         }
+        
         response = requests.post(TARGET_URL, json=data, headers=headers)
         
         # Check the response from the POST request

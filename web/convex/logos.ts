@@ -94,3 +94,29 @@ export const getAllLogos = query({
     );
   },
 });
+
+export const saveImages = mutation({
+  args: {
+    images: v.array(v.string()),
+    metadata: v.object({}),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert('images', {
+      imageStorageIds: args.images,
+      metadata: args.metadata,
+    });
+  },
+});
+
+export const getAllImages = query({
+  args: {},
+  handler: async (ctx) => {
+    const images = await ctx.db.query('images').collect();
+    return Promise.all(
+      images.map(async (image) => ({
+        ...image,
+        urls: await Promise.all(image.imageStorageIds.map((id) => ctx.storage.getUrl(id))),
+      })),
+    );
+  },
+});

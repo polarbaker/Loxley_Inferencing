@@ -44,7 +44,7 @@ export default defineSchema({
     storageId: v.optional(v.string()),
   }).index('by_logo_set_id', ['logoSetId']),
   images: defineTable({
-    images: v.array(v.string()),
+    imageStorageIds: v.array(v.string()),
     metadata: v.object({}),
   }),
 });
