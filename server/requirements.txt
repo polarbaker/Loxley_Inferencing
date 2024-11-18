@@ -1,0 +1,7 @@
+flask
+diffusers
+transformers
+matplotlib
+Pillow
+torch
+requests
