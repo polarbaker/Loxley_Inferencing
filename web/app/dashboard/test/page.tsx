@@ -15,12 +15,9 @@ export default function Dashboard() {
         <h1 className="text-2xl font-bold">All Images Test</h1>
       </div>
 
-      <div className="flex w-full">
+      <div className="flex flex-col gap-4 w-full">
         {imageSets?.map((imageSet, i) => (
-          <div
-            key={i}
-            className="grid grid-cols-3 flex-row gap-2 rounded-lg border p-4 overflow-x-auto"
-          >
+          <div key={i} className="grid grid-cols-8 gap-2 rounded-lg border p-4">
             {imageSet.urls.map((url, j) => (
               <img
                 key={j}
