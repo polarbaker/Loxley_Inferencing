@@ -11,7 +11,15 @@ export const receiveImage = httpAction(async (ctx, request) => {
   const body = await request.json();
   console.log(body);
 
-  return new Response('hello world', {
+  // Extract data from request body
+  const { images, ...otherData } = body;
+
+  // Save the images and metadata to the database
+
+  return new Response(JSON.stringify({ success: true, otherData }), {
     status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 });
